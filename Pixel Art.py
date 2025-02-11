@@ -22,7 +22,7 @@ for i in range(125*2+75,150*2+75):
         lienzo[j,i] = 1
     for j in range(100, 125):
         lienzo[j,i] = 1
-for i in range(100*2+75,125*2+75):
+for i in range(100*2,125*2):
     for j in range(125, 150):
         lienzo[j,i] = 1
     for j in range(150, 175):
