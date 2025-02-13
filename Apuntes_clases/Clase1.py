@@ -4,7 +4,7 @@ import numpy as np
 print(cv.__version__) 
 img = np.ones((500,500), dtype=np.uint8) *1
 img[30,30] = 255 #Crea un punto blanco en la ubicacion 30,30
-img2 = cv.imread('tuxYRei.jpg', 1)
+img2 = cv.imread('imagenes/tuxYRei.jpg', 1)
 img3 = np.zeros((img2.shape[:2]), dtype=np.uint8)
 #Separa los valores de la imagen en 3 valores (uno por cada canal de RGB)
 r, g, b = cv.split(img2)

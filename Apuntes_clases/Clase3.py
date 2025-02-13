@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-img = cv.imread('tuxYRei.jpg', 1)
+img = cv.imread('imagenes/tuxYRei.jpg', 1)
 #Se puede configurar los modelos de color. 
 # Cambia el modelo de color de imagen a un modelo de color en especifico (en este caso, blanco y negro).
 img2 = cv.cvtColor(img, cv.COLOR_BGR2GRAY)

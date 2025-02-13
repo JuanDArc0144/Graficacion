@@ -1,9 +1,9 @@
 import cv2 as cv
 import numpy as np
-img = cv.imread('tuxYRei.jpg', 1)
+img = cv.imread('imagenes/tuxYRei.jpg', 1)
 #Crea una matriz de solo 0's
 img2 = np.zeros((img.shape[:2]), dtype=np.uint8) 
-img0 = cv.imread('tuxYRei.jpg', 0)
+img0 = cv.imread('imagenes/tuxYRei.jpg', 0)
 #Divide la imagen en 3 matrices, separando los colores rgb
 r, g, b = cv.split(img)
 #En lugar de RGB, es BGR (se ordena al revés)
