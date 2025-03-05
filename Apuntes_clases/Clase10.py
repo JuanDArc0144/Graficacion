@@ -15,7 +15,7 @@ lk_params = dict(winSize=(15, 15), maxLevel=2,
 # Leer el primer frame de la cámara
 ret, first_frame = cap.read()
 prev_gray = cv.cvtColor(first_frame, cv.COLOR_BGR2GRAY)
-
+ball_pox_aux = np.array([[250, 250]], dtype=np.float32)
 # Posición inicial de la pelotita (un único punto en el centro de la imagen)
 ball_pos = np.array([[250, 250]], dtype=np.float32)
 ball_pos = ball_pos[:, np.newaxis, :]
@@ -37,11 +37,22 @@ while True:
     # Si se detecta el nuevo movimiento, actualizar la posición de la pelotita
     if new_ball_pos is not None:
         ball_pos = new_ball_pos
-
         # Dibujar la pelotita en su nueva posición
         a, b = ball_pos.ravel()
-        frame = cv.circle(frame, (int(a), int(b)), 20, (0, 255, 0), -1)
-    cv.rectangle(frame, (20,20), (y-20, x-20), (234,43 ,34) ,5)    
+        if a < 60:
+            ball_pos = ball_pox_aux
+        if b < 60:
+            ball_pos = ball_pox_aux
+        if a > (y-60):
+            ball_pos = ball_pox_aux
+        if b > (x-60):
+            ball_pos = ball_pox_aux
+        cv.putText(frame, f'{int(a), int(b)}', (int(a-30), int(b-30)), cv.FONT_HERSHEY_COMPLEX, 0.7, (0,25,235), 2)
+        frame = cv.circle(frame, (int(a), int(b)), 20, (0, 0, 255), -1)
+    else:
+        #ARREGLAR POSICION
+        ball_pos = ball_pos+1
+    cv.rectangle(frame, (60,60), (y-60, x-60), (234,43 ,34) ,5)    
     # Mostrar solo una ventana con la pelotita en movimiento
     cv.imshow('Pelota en movimiento', frame)
 
