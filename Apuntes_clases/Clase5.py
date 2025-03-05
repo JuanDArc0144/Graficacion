@@ -9,11 +9,11 @@ imgc = cv.imread('imagenes/nanbaka.jpg', 1)
 # t_img = np.zeros((x,y), dtype=np.uint8)
 # #Escalado
 scale_x, scale_y = 1.5,1.5
-# s_img = np.zeros((int(x * scale_x), int(y * scale_y)), dtype=np.uint8)
-# #Aplicar el escalado
-# for i in range(x):
-#     for j in range(y):
-#         s_img[i*2, j*2] = img[i,j]
+s_img = np.zeros((int(x * scale_x), int(y * scale_y)), dtype=np.uint8)
+#Aplicar el escalado
+for i in range(x):
+    for j in range(y):
+        s_img[i*2, j*2] = img[i,j]
 # #Rotacion
 cv.imshow('Original', imgc)
 # cv.imshow('Escalada', s_img)
