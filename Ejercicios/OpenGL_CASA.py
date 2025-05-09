@@ -5,7 +5,7 @@ import sys
 
 def init():
     """Configuración inicial de OpenGL"""
-    glClearColor(0.5, 0.8, 1.0, 1.0)  # Fondo azul cielo
+    glClearColor(0.9, 0.9, 1.0, 0.5)  # Fondo azul cielo
     glEnable(GL_DEPTH_TEST)           # Activar prueba de profundidad
 
     # Configuración de la perspectiva
@@ -13,86 +13,96 @@ def init():
     gluPerspective(50, 1.0, 0.1, 100.0)  # Campo de visión más amplio
     glMatrixMode(GL_MODELVIEW)
 
+def draw_window():
+    glBegin(GL_QUADS)
+    glColor3f(0.9, 0.9, 0.9)
+    #Lado derecho
+    glVertex3f(2.01, 1.5, -1)
+    glVertex3f(2.01, 0.5, -1)
+    glVertex3f(2.01, 0.5, 1)
+    glVertex3f(2.01, 1.5, 1)
+    glEnd()
+def draw_door():
+    glBegin(GL_QUADS)
+    glColor3f(0.2, 0.2, 0)
+    glVertex3f(-0.60, 0, 2.01)
+    glVertex3f(1, 0, 2.01)
+    glVertex3f(1, 1.2, 2.01)
+    glVertex3f(-0.60, 1.2, 2.01)
+    glEnd()
 def draw_cube():
     """Dibuja el cubo (base de la casa)"""
     glBegin(GL_QUADS)
-    glColor3f(0.8, 0.5, 0.2)  # Marrón para todas las caras
+    glColor3f(0.7, 0.5, 0.2)  # Marrón para todas las caras
 
     # Frente
-    glVertex3f(-1, 0, 1)
-    glVertex3f(1, 0, 1)
-    glVertex3f(1, 1, 1)
-    glVertex3f(-1, 1, 1)
+    glVertex3f(-2, 0, 2)
+    glVertex3f(2, 0, 2)
+    glVertex3f(2, 2, 2)
+    glVertex3f(-2, 2, 2)
     # Atrás
-    glVertex3f(-1, 0, -1)
-    glVertex3f(1, 0, -1)
-    glVertex3f(1, 1, -1)
-    glVertex3f(-1, 1, -1)
+    glVertex3f(-2, 0, -2)
+    glVertex3f(2, 0, -2)
+    glVertex3f(2, 2, -2)
+    glVertex3f(-2, 2, -2)
 
     # Izquierda
-    glVertex3f(-1, 0, -1)
-    glVertex3f(-1, 0, 1)
-    glVertex3f(-1, 1, 1)
-    glVertex3f(-1, 1, -1)
+    glVertex3f(-2, 0, -2)
+    glVertex3f(-2, 0, 2)
+    glVertex3f(-2, 2, 2)
+    glVertex3f(-2, 2, -2)
 
     # Derecha
-    glVertex3f(1, 0, -1)
-    glVertex3f(1, 0, 1)
-    glVertex3f(1, 1, 1)
-    glVertex3f(1, 1, -1)
+    glVertex3f(2, 0, -2)
+    glVertex3f(2, 0, 2)
+    glVertex3f(2, 2, 2)
+    glVertex3f(2, 2, -2)
 
     # Arriba
     glColor3f(0.9, 0.6, 0.3)  # Color diferente para el techo
-    glVertex3f(-1, 1, -1)
-    glVertex3f(1, 1, -1)
-    glVertex3f(1, 1, 1)
-    glVertex3f(-1, 1, 1)
+    glVertex3f(-2, 2, -2)
+    glVertex3f(2, 2, -2)
+    glVertex3f(2, 2, 2)
+    glVertex3f(-2, 2, 2)
 
     # Abajo
     glColor3f(0.6, 0.4, 0.2)  # Suelo más oscuro
-    glVertex3f(-1, 0, -1)
-    glVertex3f(1, 0, -1)
-    glVertex3f(1, 0, 1)
-    glVertex3f(-1, 0, 1)
+    glVertex3f(-2, 0, -2)
+    glVertex3f(2, 0, -2)
+    glVertex3f(2, 0, 2)
+    glVertex3f(-2, 0, 2)
     glEnd()
-
-    #Ventana
-    glColor3f(0.2, 0.8, 0.1)
-    glVertex3f(0.3, 0, -0.3)
-    glVertex3f(0.3, 0, 0.3)
-    glVertex3f(0.3, 0.3, 0.3)
-    glVertex3f(0.3, 0.3, -0.3)
 
 def draw_roof():
     """Dibuja el techo (pirámide)"""
     glBegin(GL_TRIANGLES)
-    glColor3f(0.9, 0.1, 0.1)  # Rojo brillante
+    glColor3f(0.6, 0.1, 0.1)  # Rojo brillante
 
     # Frente
-    glVertex3f(-1, 1, 1)
-    glVertex3f(1, 1, 1)
-    glVertex3f(0, 2, 0)
+    glVertex3f(-2, 2, 2)
+    glVertex3f(2, 2, 2)
+    glVertex3f(0, 4, 0)
 
     # Atrás
-    glVertex3f(-1, 1, -1)
-    glVertex3f(1, 1, -1)
-    glVertex3f(0, 2, 0)
+    glVertex3f(-2, 2, -2)
+    glVertex3f(2, 2, -2)
+    glVertex3f(0, 4, 0)
 
     # Izquierda
-    glVertex3f(-1, 1, -1)
-    glVertex3f(-1, 1, 1)
-    glVertex3f(0, 2, 0)
+    glVertex3f(-2, 2, -2)
+    glVertex3f(-2, 2, 2)
+    glVertex3f(0, 4, 0)
 
     # Derecha
-    glVertex3f(1, 1, -1)
-    glVertex3f(1, 1, 1)
-    glVertex3f(0, 2, 0)
+    glVertex3f(2, 2, -2)
+    glVertex3f(2, 2, 2)
+    glVertex3f(0, 4, 0)
     glEnd()
 
 def draw_ground():
     """Dibuja un plano para representar el suelo o calle"""
     glBegin(GL_QUADS)
-    glColor3f(0.3, 0.9, 0.3)  # Gris oscuro para la calle
+    glColor3f(0.3, 0.5, 0.3)  # Gris oscuro para la calle
 
     # Coordenadas del plano
     glVertex3f(-10, 0, 10)
@@ -107,13 +117,15 @@ def draw_house():
     glLoadIdentity()
 
     # Configuración de la cámara
-    gluLookAt(4, 3, 8,  # Posición de la cámara
+    gluLookAt(9, 4, 4,  # Posición de la cámara
               0, 1, 0,  # Punto al que mira
               0, 1, 0)  # Vector hacia arriba
 
     draw_ground()  # Dibuja el suelo
     draw_cube()    # Dibuja la base de la casa
     draw_roof()    # Dibuja el techo
+    draw_window()
+    draw_door()
 
     glfw.swap_buffers(window)
 
