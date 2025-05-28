@@ -2,7 +2,7 @@ import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt, gluNewQuadric, gluCylinder, gluSphere
 import sys
-ancho_plano = 5
+ancho_plano = 100
 #VARIABLES DE LA CAMARA
 camera_pos = [4.0, 3.0, 8.0]  # Posición de la cámara
 camera_target = [0.0, 1.0, 0.0]  # Punto al que mira
@@ -24,7 +24,6 @@ def init():
     glMatrixMode(GL_PROJECTION)
     gluPerspective(120, 1.0, 0.1, 100.0)  # Campo de visión más amplio
     glMatrixMode(GL_MODELVIEW)
-
 def base():
     glBegin(GL_QUADS)
     glColor3f(0.3,0.3,0.3)
@@ -33,110 +32,133 @@ def base():
     glVertex3f(ancho_plano, 0, -ancho_plano)
     glVertex3f(-ancho_plano, 0, -ancho_plano)
     glEnd()
-
-def pilar(x):
-    cIS = 0.3
-    h = 1
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(x, 0, 0)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    #(quadric, circulo_inferior, circulo_superior, altura)
-    gluCylinder(quadric, cIS, cIS, h, 32, 32)
-    glPopMatrix()
-#SECCION DE LA REINA DE AJEDREZ ----------------------------------------------------------------------------------------------
-def reina():
-    hB = 1
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(1, hB, 0)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    #(quadric, circulo_inferior, circulo_superior, altura)
-    gluCylinder(quadric, 0.41, 0, 2, 32, 32) #Cono de la reina
-    torso_reina()
-    glPopMatrix()
-def torso_reina():
-    hB = 3
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(0, 0, 1.32)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    gluSphere(quadric, 0.38, 32, 32)
-    glPopMatrix()
-    cabeza_reina()
-def cabeza_reina():
-    hB = 3
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(0, 0, 2)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    gluSphere(quadric, 0.34, 32, 32)
-    glPopMatrix()
-#FIN DE LA SECCIÓN DE LA REINA ---------------------------------------------------------------------------------------------------
-def figura(x):
-    pilar(x)
-    if x == 1:
-        reina()
-    else:
-        cuerpo(x)
-        cuellos(x)
-        cabezas(x)
-def cabezas(x):
-    cIS = 0.39
-    hB = 2.6
-    if x == 2:
-        hB = 3
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(x, hB, 0)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    #(quadric, circulo_inferior, circulo_superior, altura)
-    gluSphere(quadric, 0.34, 32, 32)
-    glPopMatrix()
-def cuellos(x):
-    cIS = 0.39
-    hB = 2
-    if x == 2:
-        hB = 2.5
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(x, hB, 0)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    #(quadric, circulo_inferior, circulo_superior, altura)
-    gluCylinder(quadric, 0.39, 0.1, 0.3, 32, 32) #Cono de los cuellos
-    glPopMatrix()
 def dibujar():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
     gluLookAt(camera_pos[0], camera_pos[1], camera_pos[2],  # Posición de la cámara
               camera_target[0], camera_target[1], camera_target[2],  # Punto al que mira
               camera_up[0], camera_up[1], camera_up[2])  # Vector hacia arriba
-    base()
-    for x in range(3, -3, -1):
-        figura(x)
+    sephiroth()
+#-----------------------------------------------------------------------------------------------------------
+def sephiroth():
+    x = 0
+    y = 0
+    z = 0
+    pies()
+def pies():
+    R = 0
+    G =0
+    B =0
+    #POLIGONO BASE
+    glBegin(GL_POLYGON)
+    glColor3f(R, G, B)
+    glVertex(0, 0, 0)
+    glVertex(4, 0, -3)
+    glVertex(3, 0, -4)
+    glVertex(-2, 0, -3)
+    glVertex(-3, 0, -1)
+    glVertex(0,0,0)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glColor3f(R, G, B)
+    glVertex(0, 0, 0)
+    glVertex(4, 0, 3)
+    glVertex(3, 0, 4)
+    glVertex(-2, 0, 3)
+    glVertex(-3, 0, 1)
+    glVertex(0,0,0)
+    glEnd()
+    #POLIGONO REDUCIDO
+    glBegin(GL_POLYGON)
+    glColor3f(0.3, 0.3, 0.3)
+    glVertex(0, 0.5, -1) #VERTICE INICIAL
+    glVertex(3.8, 0.4, -3.2) #VERTICE PULGAR
+    glVertex(3.2, 0.4, -3.8) # VERTICE MEÑIQUE
+    glVertex(-1.8, 0.49, -2.8) #VERTICE HUESO
+    glVertex(-2.7, 0.52, -1.2) #VERTICE TALON
+    glVertex(0,0.5,-1)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glColor3f(0.3, 0.3, 0.3)
+    glVertex(0, 0.5, 1)
+    glVertex(3.8, 0.4, 3.2)
+    glVertex(3.2, 0.4, 3.8)
+    glVertex(-1.8, 0.49, 2.8)
+    glVertex(-2.7, 0.52, 1.2)
+    glVertex(0,0.5,1)
+    glEnd()
+    #TRIDIMENSIONALIDAD
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(0, 0, 0)
+    glVertex(0, 0.5, -1)
+    glVertex(-2.7, 0.52, -1.2)
+    glVertex(-3, 0, -1)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(0, 0, 0)
+    glVertex(0, 0.5, 1)
+    glVertex(-2.7, 0.52, 1.2)
+    glVertex(-3, 0, 1)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(0, 0, 0)
+    glVertex(0, 0.5, -1)
+    glVertex(3.8, 0.4, -3.2)
+    glVertex(4, 0, -3)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(0, 0, 0)
+    glVertex(0, 0.5, 1)
+    glVertex(3.8, 0.4, 3.2)
+    glVertex(4, 0, 3)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(3.8, 0.4, -3.2)
+    glVertex(4, 0, -3)
+    glVertex(3, 0, -4)
+    glVertex(3.2, 0.4, -3.8)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(3.8, 0.4, 3.2)
+    glVertex(4, 0, 3)
+    glVertex(3, 0, 4)
+    glVertex(3.2, 0.4, 3.8)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(3.2, 0.4, -3.8)
+    glVertex(3, 0, -4)
+    glVertex(-2, 0, -3)
+    glVertex(-1.8, 0.49, -2.8)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(3.2, 0.4, 3.8)
+    glVertex(3, 0, 4)
+    glVertex(-2, 0, 3)
+    glVertex(-1.8, 0.49, 2.8)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(-1.8, 0.49, -2.8)
+    glVertex(-2, 0, -3)
+    glVertex(-3, 0, -1)
+    glVertex(-2.7, 0.52, -1.2)
+    glEnd()
+    glBegin(GL_QUADS)
+    glColor3f(R, G, B)
+    glVertex(-1.8, 0.49, 2.8)
+    glVertex(-2, 0, 3)
+    glVertex(-3, 0, 1)
+    glVertex(-2.7, 0.52, 1.2)
+    glEnd()
     glfw.swap_buffers(window)
-def cuerpo(x):
-    cIS = 0.39
-    hB = 1
-    h = 3
-    glPushMatrix()
-    glColor3f(r, g, b)
-    glTranslatef(x, hB, 0)
-    glRotatef(-90, 1, 0, 0)
-    quadric = gluNewQuadric()
-    if x == 2:
-        h = 1.5
-    else:
-        h = 1
-    #(quadric, circulo_inferior, circulo_superior, altura)
-    gluCylinder(quadric, cIS, cIS, h, 32, 32)
-    glPopMatrix()
 def process_input():
     """Procesa el estado de las teclas para mover la cámara"""
     global camera_pos
@@ -168,7 +190,7 @@ def main():
         sys.exit()
     # Crear ventana de GLFW
     width, height = 800, 600
-    window = glfw.create_window(width, height, "Mover Escena Completa", None, None)
+    window = glfw.create_window(width, height, "SEPHIROTH", None, None)
     if not window:
         glfw.terminate()
         sys.exit()
