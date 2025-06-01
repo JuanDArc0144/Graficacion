@@ -1,3 +1,6 @@
+# MEDIAPIPE EJEMPLO CON LAS MANOS (HAND_TRACKING)
+
+```python
 import cv2 as cv
 import mediapipe as mp
 
@@ -27,3 +30,4 @@ while cap.isOpened():
         break
 cap.release()
 cv.destroyAllWindows()
+```

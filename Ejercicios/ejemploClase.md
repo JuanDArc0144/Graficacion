@@ -1,3 +1,6 @@
+# EJEMPLO VISTO EN CLASE (ANIMACION)
+
+```python
 import numpy as np
 import cv2
 
@@ -45,3 +48,4 @@ for t in t_vals:
 
 # Cerrar la ventana después de la animación
 cv2.destroyAllWindows()
+```

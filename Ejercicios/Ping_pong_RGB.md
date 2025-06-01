@@ -1,3 +1,6 @@
+# PING PONG REALIZADO EN CLASE
+
+```python
 import cv2 as cv
 import numpy as np
 dx = 5
@@ -37,6 +40,7 @@ for i in range(400):
     cv.imshow('imagen', img)
     cv.waitKey(40)
 cv.destroyAllWindows
+```
 
 
     

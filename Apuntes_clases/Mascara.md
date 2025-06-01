@@ -1,3 +1,6 @@
+# MASCARA CON FILTROS PARA CARA
+
+```python
 import cv2
 import mediapipe as mp
 
@@ -33,5 +36,6 @@ while cap.isOpened():
         break
 cap.release()
 cv2.destroyAllWindows()
+```
 
 

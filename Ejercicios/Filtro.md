@@ -1,5 +1,7 @@
-import cv2 as cv 
+# FILTRO DEL ROSTRO
 
+```python
+import cv2 as cv 
 rostro = cv.CascadeClassifier('imagenes/haarcascade_frontalface_alt.xml')
 cap = cv.VideoCapture(0)
 
@@ -31,3 +33,4 @@ while True:
         break
 cap.release
 cv.destroyAllWindows()
+```

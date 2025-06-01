@@ -1,6 +1,8 @@
-#Detectar movimiento, utilizando translaciones y transformaciones geométricas. 
-#Flujo óptico
-#Algoritmos de detección de movimiento a través del cambio de probabilidad de los pixeles. 
+# Detectar movimiento, utilizando translaciones y transformaciones geométricas. 
+# Flujo óptico
+# Algoritmos de detección de movimiento a través del cambio de probabilidad de los pixeles. 
+
+```python
 import numpy as np
 import cv2 as cv
 # Iniciar la captura de video desde la cámara
@@ -62,3 +64,4 @@ while True:
 # Liberar la captura y destruir todas las ventanas
 cap.release()
 cv.destroyAllWindows()
+```

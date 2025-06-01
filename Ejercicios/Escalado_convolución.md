@@ -1,3 +1,6 @@
+# TRANSFORMACIONES GEOMETRICAS EJERCICIO 
+
+```python
 import cv2 as cv
 import numpy as np
 import math
@@ -26,3 +29,4 @@ cv.imshow('Original', imgo)
 cv.imshow('Escalada', s_img)
 cv.waitKey()
 cv.destroyAllWindows
+```

@@ -1,3 +1,6 @@
+# Quinta clase: Transformaciones geométricas
+
+```python
 import cv2 as cv
 import numpy as np
 import math
@@ -30,3 +33,4 @@ cv.imshow('Escalada', scale_i)
 
 cv.waitKey(0)
 cv.destroyAllWindows
+```

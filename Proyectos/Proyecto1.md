@@ -1,3 +1,6 @@
+# PROYECTO 1: Identificar letras en lenguaje de señas a través de los landmarks en Mediapipe.  
+
+```python
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -121,3 +124,4 @@ while cap.isOpened():
 # Liberar recursos
 cap.release()
 cv2.destroyAllWindows()
+```

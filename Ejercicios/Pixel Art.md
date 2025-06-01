@@ -1,3 +1,6 @@
+# PIXEL ART (LINK)
+
+```python
 import cv2 as cv
 import numpy as np
 #Creación de la matriz 1000x1000
@@ -379,3 +382,4 @@ for i in range(625, 650):
 cv.imshow('LINK' , img)
 cv.waitKey(0)
 cv.destroyAllWindows
+```

@@ -1,3 +1,6 @@
+# Codigo para diseñar un arból en OpenGL
+
+```python
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt, gluNewQuadric, gluCylinder, gluSphere
@@ -158,3 +161,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```

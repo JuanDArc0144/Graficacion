@@ -1,3 +1,6 @@
+# RENDIJA DE RASTRO DE MOVIMIENTO A TRAVÉS DE OPENCV
+
+```python
 import numpy as np 
 import cv2 as cv
 cap = cv.VideoCapture(0)
@@ -41,3 +44,4 @@ while True:
             break
 cap.release()
 cv.destroyAllWindows()
+```

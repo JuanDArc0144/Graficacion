@@ -1,3 +1,6 @@
+# MODIFICACION DE CASA EN OPENGL
+
+```python
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt
@@ -156,3 +159,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```

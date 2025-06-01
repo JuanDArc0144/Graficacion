@@ -1,4 +1,6 @@
-#SEGMENTACIÓN POR COLOR en video
+# SEGMENTACIÓN POR COLOR en video
+
+```python
 import cv2 as cv
 
 cap = cv.VideoCapture(0) #Puede ser 0 y la cadena de una camara IP (tambien un video)
@@ -20,6 +22,7 @@ while(True):
         break
 cap.release
 cv.destroyAllWindows
+```
 
 
 

@@ -1,3 +1,6 @@
+# Tercera clase: Filtros en las fotografias 
+
+```python
 import cv2 as cv
 import numpy as np
 img = cv.imread('imagenes/tuxYRei.jpg', 1)
@@ -31,3 +34,4 @@ for i in range(x):
 cv.imshow('pasa', img2)
 cv.waitKey(0)
 cv.destroyAllWindows
+```
