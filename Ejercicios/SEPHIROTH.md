@@ -1,3 +1,6 @@
+# EJERCICIO PERSONAL: REALIZAR MODELO 3D A TRAVÉS DE OPENGL (SEPHIROTH by Final Fantasy VII)
+
+```python
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt, gluNewQuadric, gluCylinder, gluSphere
@@ -211,5 +214,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
 
 

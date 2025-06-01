@@ -1,3 +1,6 @@
+# Segunda clase: Separación de los colores RGB
+
+```python
 import cv2 as cv
 import numpy as np
 img = cv.imread('imagenes/tuxYRei.jpg', 1)
@@ -30,3 +33,4 @@ cv.imshow('B&W', img0)
 print(img.shape)
 cv.waitKey(0)
 cv.destroyAllWindows
+```

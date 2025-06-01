@@ -1,10 +1,13 @@
+# PROYECTO 2: Realizar un modelo 3D a través de OpenGL y asignarle controles de movimiento a través de los landmarks en Mediapipe 
+
+```python
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import gluPerspective, gluLookAt, gluNewQuadric, gluCylinder, gluSphere
 import sys
 import mediapipe as mp
 import cv2
-import threading
+import threading 
 import math
 import numpy as np
 ancho_plano = 5
@@ -14,21 +17,75 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
 radio = 0
-def base():
-    glBegin(GL_QUADS)
-    glColor3f(1,1,1)
-    glVertex3f(-ancho_plano, 0, ancho_plano)
-    glVertex3f(ancho_plano, 0, ancho_plano)
-    glVertex3f(ancho_plano, 0, -ancho_plano)
-    glVertex3f(-ancho_plano, 0, -ancho_plano)
-    glEnd()
 #VARIABLES DE LA CAMARA
 camera_pos = [4.0, 3.0, 8.0]  # Posición de la cámara
 camera_target = [0.0, 1.0, 0.0]  # Punto al que mira
 camera_up = [0.0, 1.0, 0.0]  # Vector hacia arriba
+light_pos = [1.0, 1.0, 1.0, 0.0]  # Posición de la luz
+light_color = [1.0, 1.0, 1.0, 1.0]  # Color de la luz blanca
+ambient_light = [0.2, 0.2, 0.2, 1.0]  # Luz ambiental
 # VARIABLES DEL MOVIMIENTO
-camera_speed = 0.5 # Velocidad de movimiento
+camera_speed = 0.01 # Velocidad de movimiento
+camera_speed_hands = 0.5
 keys = {}  # Diccionario para controlar el estado de las teclas
+# KIRBY SECCIONES ------------------------------------------------------------------------------------------------------------------------------
+def boca():
+    x,y,z = 3.9,1,0
+    glPushMatrix()
+    glColor3f(0,0,0)
+    material_diffuse2 = [0,0,0, 0] #COLOR NEGRO BRILLANTE
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material_diffuse2)
+    glTranslatef(x,y,z)
+    quadric = gluNewQuadric()
+    gluSphere(quadric, 1, 32,32)
+    glPopMatrix()
+def ojos(q):
+    x,y,z = 0,0,0
+    glPushMatrix()
+    glColor3f(0,0,0)
+    material_diffuse2 = [0,0,0, 0] #COLOR NEGRO BRILLANTE
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material_diffuse2)
+    if q == 0: 
+        x,y,z = 3.5,2.8,1.5
+    else:
+         x,y,z = 3.5,2.8,-1.5
+    glTranslatef(x,y,z)
+    glRotatef(48,0,0.6,1)
+    glScalef(1,2.8,1)
+    quadric = gluNewQuadric()
+    gluSphere(quadric, 0.5, 32,32)
+    glPopMatrix()
+def mejillas(q):
+    x,y,z = 0,0,0
+    glPushMatrix()
+    glColor3f(255,0.823529,0.905882)
+    material_diffuse2 = [255,0.823529,0.905882, 0] #COLOR NEGRO BRILLANTE
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material_diffuse2)
+    if q == 0: 
+        x,y,z = 3.5,2,2.1
+    else:
+        x,y,z = 3.5,2,-2.1
+    glTranslatef(x,y,z)
+    glRotatef(48,0,0.6,1)
+    quadric = gluNewQuadric()
+    gluSphere(quadric, 0.6, 32,32)
+    glPopMatrix()
+def reflejos_azules(q):
+    x,y,z = 0,0,0
+    glPushMatrix()
+    glColor3f(0.058823, 0.211764, 0.439215)
+    material_diffuse2 = [0.058823, 0.211764, 0.439215, 0] #COLOR NEGRO BRILLANTE
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material_diffuse2)
+    if q == 0: 
+        x,y,z = 3.481,2.8,1.5
+    else:
+         x,y,z = 3.481,2.8,-1.5
+    glTranslatef(x,y,z)
+    glRotatef(51,0,0.6,1)
+    glScalef(1,2.8,1)
+    quadric = gluNewQuadric()
+    gluSphere(quadric, 0.5, 32,32)
+    glPopMatrix()
 def brazos(x,y,z,a, q):
      glPushMatrix()
      glColor3f(1,0,1)  
@@ -42,7 +99,9 @@ def brazos(x,y,z,a, q):
      glPopMatrix()
 def pies(x,y,z,a):
     glPushMatrix()
-    glColor3f(1,0.411764,0.380392)
+    #glColor3f(1,0.411764,0.380392)
+    material_diffuse = [1,0.411764,0.380392, 1] 
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material_diffuse)
     glTranslatef(x,z,y)
     glRotatef(a,x,z,y)
     quadric = gluNewQuadric()
@@ -56,6 +115,8 @@ def dibujar_kirby(x,y,z,a):
               camera_up[0], camera_up[1], camera_up[2])
     glPushMatrix()
     glColor3f(1,0,1)
+    material_diffuse = [1, 0.2, 1.0, 0.0]  
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, material_diffuse)
     glTranslatef(x,z,y)
     glRotatef(a,x,z,y)
     quadric = gluNewQuadric()
@@ -65,15 +126,49 @@ def dibujar_kirby(x,y,z,a):
     brazos(x+1, y-5, z, a, 1)
     pies(x,y+2,z-4,a)
     pies(x,y-2,z-4,a)
-    # reflejos_azules(x,y,z,a)
-    # reflejos_blancos(x,y,z,a)
-    # mejillas(x,y,z,a)
-    # boca(x,y,z,a)
+    ojos(0)
+    ojos(1)
+    reflejos_azules(0)
+    reflejos_azules(1)
+    mejillas(0)
+    mejillas(1)
+    boca()
     glfw.swap_buffers(window)
+# KIRBY SECCIONES ------------------------------------------------------------------------------------------------------------------------------
+def process_input():
+    """Procesa el estado de las teclas para mover la cámara"""
+    global camera_pos
+    if keys.get(glfw.KEY_W, False):  # Mover hacia adelante
+        camera_pos[2] -= camera_speed
+    if keys.get(glfw.KEY_S, False):  # Mover hacia atrás
+        camera_pos[2] += camera_speed
+    if keys.get(glfw.KEY_A, False):  # Mover a la izquierda
+        camera_pos[0] -= camera_speed
+    if keys.get(glfw.KEY_D, False):  # Mover a la derecha
+        camera_pos[0] += camera_speed
+    if keys.get(glfw.KEY_UP, False):  # Subir
+        camera_pos[1] += camera_speed
+    if keys.get(glfw.KEY_DOWN, False):  # Bajar
+        camera_pos[1] -= camera_speed
+
+def key_callback(window, key, scancode, action, mods):
+    """Actualiza el estado de las teclas"""
+    if action == glfw.PRESS:
+        keys[key] = True
+    elif action == glfw.RELEASE:
+        keys[key] = False
 def init():
     """Configuración inicial de OpenGL"""
-    glClearColor(0.5, 0.6, 1.0, 1.0)  # Fondo azul cielo
-    glEnable(GL_DEPTH_TEST)           # Activar prueba de profundidad
+    glClearColor(0.643137, 0.815686, 0.631372, 1.0)  # Fondo azul cielo
+    glEnable(GL_DEPTH_TEST) # Activar prueba de profundidad
+    glEnable(GL_LIGHTING)              # Activar iluminación
+    glEnable(GL_LIGHT0)
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color)
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_light)
+    glLightfv(GL_LIGHT0, GL_POSITION, light_pos)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color)
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_light)
     # Configuración de la perspectiva
     glMatrixMode(GL_PROJECTION)
     gluPerspective(120, 1.0, 0.1, 100.0) 
@@ -107,32 +202,21 @@ def controlador(hand_landmarks, frame):
     arriba_indice, mitad_indice = puntos[7], puntos[6]
     if indice[1] < arriba_indice[1] and indice[1] < mitad_indice[1]:
         if indice[0] > mitad_indice[0]:
-            camera_pos[1] += camera_speed
-            camera_pos[0] += camera_speed
+            camera_pos[1] += camera_speed_hands
+            camera_pos[0] += camera_speed_hands
             print("RIGHT-up")
         elif indice[0] < mitad_indice[0]:
-            camera_pos[0] -= camera_speed
+            camera_pos[0] -= camera_speed_hands
             print("LEFT-up")
     elif indice[1] > arriba_indice[1] and indice[1] > mitad_indice[1]:
-        camera_pos[1] -= camera_speed
+        camera_pos[1] -= camera_speed_hands
         if indice[0] > mitad_indice[0]:
-            camera_pos[1] += camera_speed
-            camera_pos[0] += camera_speed
+            camera_pos[1] += camera_speed_hands
+            camera_pos[0] += camera_speed_hands
             print("RIGHT-down")
         elif indice[0] < mitad_indice[0]:
-            camera_pos[0] -= camera_speed
+            camera_pos[0] -= camera_speed_hands
             print("LEFT-down")
-def process_input():
-    """Procesa el estado de las teclas para mover la cámara"""
-    global camera_pos
-    if keys.get(glfw.KEY_W, False):  # Mover hacia adelante
-        camera_pos[2] -= camera_speed
-    if keys.get(glfw.KEY_S, False):  # Mover hacia atrás
-        camera_pos[2] += camera_speed
-    if keys.get(glfw.KEY_A, False):  # Mover a la izquierda
-        camera_pos[0] -= camera_speed
-    if keys.get(glfw.KEY_D, False):  # Mover a la derecha
-        camera_pos[0] += camera_speed
 cap = cv2.VideoCapture(0)
 def main():
     global window 
@@ -155,7 +239,7 @@ def main():
     # Bucle principal
     while not glfw.window_should_close(window):
         process_input()  # Procesar teclas presionadas
-        base()
+        #base()
         dibujar_kirby(0,0,0,0)
         glfw.poll_events()
     glfw.terminate()
@@ -183,3 +267,4 @@ while cap.isOpened():
         break
 cap.release()
 cv2.destroyAllWindows()
+```

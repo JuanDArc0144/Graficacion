@@ -1,3 +1,7 @@
+# REALIZAR ANIMACION
+
+
+```python
 import cv2 as cv
 import numpy as np
 import random as rm
@@ -46,3 +50,4 @@ for i in t_vals:
     cv.imshow('animacion', img)
     cv.waitKey(5)
 cv.destroyAllWindows
+```

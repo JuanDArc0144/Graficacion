@@ -1,5 +1,7 @@
-#Transformaciones geometricas
-#Harrcascades (son modelos entrenados de IA, capaz de detectar rostros, carros, animales, etc.)
+# Transformaciones geometricas
+# Harrcascades (son modelos entrenados de IA, capaz de detectar rostros, carros, animales, etc.)
+
+```python
 import numpy as np
 import cv2 as cv
 #Permite levantar el archivo xml, utilizando la IA ya entrenada 
@@ -31,3 +33,4 @@ while True:
         break
 cap.release()
 cv.destroyAllWindows()
+```

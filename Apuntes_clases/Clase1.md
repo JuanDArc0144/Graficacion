@@ -1,4 +1,5 @@
 # Tipo de datos abstractos: Los tipos de datos que define el programador basandose en tipos de datos primitivos.
+```python
 import cv2 as cv #Se coloca el "as" para reducir el nombre del OpenCV (Convención)
 import numpy as np
 print(cv.__version__) 
@@ -15,5 +16,7 @@ img4 = cv.merge([r,g,b])
 cv.imshow('img', img4) #img en comillas es el titulo de la ventana
 cv.waitKey(0) #mantiene la imagen activa
 cv.destroyAllWindows() #permite cerrar la ventana
+
+```
 
 

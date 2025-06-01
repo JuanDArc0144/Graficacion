@@ -1,3 +1,6 @@
+# EJERCICIO: RE4ALIZAR ABECEDARIO A TRAVÉS DEL SEGUIMIENTO DE LAS LANDMARKS (MEDIAPIPE)
+
+```python
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -89,3 +92,4 @@ while cap.isOpened():
 # Liberar recursos
 cap.release()
 cv2.destroyAllWindows()
+```

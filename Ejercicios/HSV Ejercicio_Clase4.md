@@ -1,3 +1,6 @@
+# EJERCICIO EN CLASE HSV
+
+```python
 import cv2 as cv
 import numpy as np
 #Segmentación de modelo de color en HSV. 
@@ -37,3 +40,4 @@ cv.imshow('yellow',res4)
 cv.imshow('red', res5)
 cv.waitKey(0)
 cv.destroyAllWindows
+```
